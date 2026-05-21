@@ -1,0 +1,88 @@
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import axios from 'axios';
+
+const AuthContext = createContext();
+
+export const AuthProvider = ({ children }) => {
+    const [user, setUser] = useState(null);
+    const [token, setToken] = useState(localStorage.getItem('calcnova_token'));
+    const [loading, setLoading] = useState(true);
+    const [isOnline, setIsOnline] = useState(true);
+
+    const api = axios.create({
+        baseURL: 'http://localhost:5000/api'
+    });
+
+    api.interceptors.request.use((config) => {
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+    });
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            if (token) {
+                try {
+                    const res = await api.get('/auth/profile');
+                    setUser(res.data);
+                } catch (err) {
+                    console.error('Failed to fetch profile', err);
+                    logout();
+                }
+            }
+            setLoading(false);
+        };
+        fetchProfile();
+
+        // Sync Ping
+        const pingInterval = setInterval(async () => {
+            try {
+                await api.get('/health', { timeout: 3000 });
+                setIsOnline(true);
+            } catch (e) {
+                setIsOnline(false);
+            }
+        }, 10000); // 10s ping
+
+        return () => clearInterval(pingInterval);
+    }, [token]);
+
+    const login = async (email, password) => {
+        const res = await api.post('/auth/login', { email, password });
+        localStorage.setItem('calcnova_token', res.data.token);
+        setToken(res.data.token);
+        setUser(res.data.user);
+    };
+
+    const register = async (email, password) => {
+        const res = await api.post('/auth/register', { email, password });
+        localStorage.setItem('calcnova_token', res.data.token);
+        setToken(res.data.token);
+        setUser(res.data.user);
+    };
+
+    const logout = () => {
+        localStorage.removeItem('calcnova_token');
+        setToken(null);
+        setUser(null);
+        delete api.defaults.headers.common['Authorization'];
+    };
+
+    const deleteAccount = async () => {
+        try {
+            await api.delete('/auth/account');
+            logout();
+        } catch (err) {
+            console.error('Failed to delete account', err);
+        }
+    };
+
+    return (
+        <AuthContext.Provider value={{ user, token, loading, isOnline, login, register, logout, deleteAccount, api }}>
+            {children}
+        </AuthContext.Provider>
+    );
+};
+
+export const useAuth = () => useContext(AuthContext);
