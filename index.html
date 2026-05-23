@@ -1,15 +1,50 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/Final-Calc/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="manifest" href="/Final-Calc/manifest.json" />
-    <title>CalcNova</title>
-    <script type="module" crossorigin src="/Final-Calc/assets/index-Bl_gvqTa.js"></script>
-    <link rel="stylesheet" crossorigin href="/Final-Calc/assets/index-C2AAAolr.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
-</html>
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
+
+export default defineConfig({
+base: '/',
+
+plugins: [
+react(),
+tailwindcss()
+],
+
+build: {
+cssCodeSplit: true,
+minify: 'esbuild',
+
+rollupOptions: {
+output: {
+manualChunks(id) {
+if (id.includes('node_modules')) {
+
+if (id.includes('mathjs')) {
+return 'vendor-mathjs'
+}
+
+if (id.includes('framer-motion')) {
+return 'vendor-framer'
+}
+
+if (
+id.includes('react-router-dom') ||
+id.includes('react-router') ||
+id.includes('axios')
+) {
+return 'vendor-routing-api'
+}
+
+if (id.includes('lucide-react')) {
+return 'vendor-icons'
+}
+
+return 'vendor-common'
+}
+}
+}
+},
+
+chunkSizeWarningLimit: 800
+}
+})
