@@ -20,7 +20,7 @@ function App() {
       {/* Global Animated Background */}
       <FloatingBackground />
 
-      <div className="relative z-10 flex-grow flex flex-col">
+      <div className="relative z-10 flex-grow flex flex-col" style={{ position: 'relative', zIndex: 10 }}>
         <Suspense fallback={
           <div className="flex-grow flex items-center justify-center text-main">
             <div className="text-xl font-medium animate-pulse">Loading CalcNova...</div>

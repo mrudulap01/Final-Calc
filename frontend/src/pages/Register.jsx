@@ -29,7 +29,9 @@ const Register = () => {
                 className="w-full max-w-md p-8 rounded-2xl backdrop-blur-md shadow-2xl border"
                 style={{
                     backgroundColor: 'rgba(var(--color-bg-panel), 0.8)',
-                    borderColor: 'var(--color-border)'
+                    borderColor: 'var(--color-border)',
+                    position: 'relative',
+                    zIndex: 20
                 }}
             >
                 <div className="text-center mb-8">
