@@ -16,7 +16,7 @@ const Login = () => {
             await login(email, password);
             navigate('/');
         } catch (err) {
-            setError('Invalid credentials');
+            setError(err.response?.data?.error || err.response?.data?.message || 'Server connection failed. Please check if the backend is running.');
         }
     };
 

@@ -16,7 +16,7 @@ const Register = () => {
             await register(email, password);
             navigate('/');
         } catch (err) {
-            setError(err.response?.data?.error || 'Registration failed');
+            setError(err.response?.data?.error || err.response?.data?.message || 'Server connection failed. Please check if the backend is running.');
         }
     };
 
