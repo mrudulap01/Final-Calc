@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 json
 {
     "rewrites": [
@@ -6,4 +7,14 @@ json
             "destination": "/index.html"
         }
     ]
+=======
+json
+{
+    "rewrites": [
+        {
+            "source": "/(.*)",
+            "destination": "/index.html"
+        }
+    ]
+>>>>>>> dfceefb2557c05eb2d9a1b1afb016aa870f7cffb
 }

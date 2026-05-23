@@ -10,7 +10,11 @@ export const AuthProvider = ({ children }) => {
     const [isOnline, setIsOnline] = useState(true);
 
     const api = axios.create({
+<<<<<<< HEAD
         baseURL: import.meta.env.VITE_API_URL || 'https://calcnova-backend.onrender.com'
+=======
+        baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+>>>>>>> dfceefb2557c05eb2d9a1b1afb016aa870f7cffb
     });
 
     api.interceptors.request.use((config) => {
