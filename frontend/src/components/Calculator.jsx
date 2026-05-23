@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense, lazy } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import * as math from 'mathjs';
 import { Mic, MicOff, Download, Share2, Camera } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import RobotAssistant from './RobotAssistant';
-import ImageSolverModal from './ImageSolverModal';
 import { useAuth } from '../context/AuthContext';
 import { solveAlgebraEquation } from '../utils/algebraSolver';
+
+const ImageSolverModal = lazy(() => import('./ImageSolverModal'));
 
 import BasicKeypad from './keypads/BasicKeypad';
 import ScientificKeypad from './keypads/ScientificKeypad';
@@ -493,13 +494,15 @@ const Calculator = () => {
                     )}
                 </motion.div>
 
-                <ImageSolverModal
-                    isOpen={isImageModalOpen}
-                    onClose={() => setIsImageModalOpen(false)}
-                    onSolve={handleOcrSolve}
-                    setRobotState={setRobotState}
-                    setRobotMsg={setRobotMsg}
-                />
+                <Suspense fallback={null}>
+                    <ImageSolverModal
+                        isOpen={isImageModalOpen}
+                        onClose={() => setIsImageModalOpen(false)}
+                        onSolve={handleOcrSolve}
+                        setRobotState={setRobotState}
+                        setRobotMsg={setRobotMsg}
+                    />
+                </Suspense>
             </motion.div>
         </div>
     );

@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense, lazy } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { LogOut, History, BarChart2, Mic, Calculator as CalcIcon, Trash2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Calculator from '../components/Calculator';
-import HistoryPanel from '../components/HistoryPanel';
-import AnalyticsPanel from '../components/AnalyticsPanel';
 import AssistantPanel from '../components/AssistantPanel';
 import AvatarMenu from '../components/AvatarMenu';
 import ThemeSelector from '../components/ThemeSelector';
 import { useLang } from '../context/LanguageContext';
+
+const HistoryPanel = lazy(() => import('../components/HistoryPanel'));
+const AnalyticsPanel = lazy(() => import('../components/AnalyticsPanel'));
 
 const Dashboard = () => {
     const { user, isOnline } = useAuth();
@@ -92,7 +93,9 @@ const Dashboard = () => {
                             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
                             className="absolute top-0 left-0 h-full z-40 w-full max-w-md shadow-2xl"
                         >
-                            <HistoryPanel onClose={() => setActiveTab('calculator')} />
+                            <Suspense fallback={<div className="p-8 text-center bg-panel/90 text-main h-full flex items-center justify-center animate-pulse" style={{ backgroundColor: 'rgba(var(--color-bg-panel), 0.95)', color: 'var(--color-text-main)' }}>Loading history...</div>}>
+                                <HistoryPanel onClose={() => setActiveTab('calculator')} />
+                            </Suspense>
                         </motion.div>
                     )}
                 </AnimatePresence>
@@ -107,7 +110,9 @@ const Dashboard = () => {
                             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
                             className="absolute top-0 right-0 h-full z-40 w-full max-w-4xl shadow-2xl"
                         >
-                            <AnalyticsPanel onClose={() => setActiveTab('calculator')} />
+                            <Suspense fallback={<div className="p-8 text-center bg-panel/90 text-main h-full flex items-center justify-center animate-pulse" style={{ backgroundColor: 'rgba(var(--color-bg-panel), 0.95)', color: 'var(--color-text-main)' }}>Loading analytics...</div>}>
+                                <AnalyticsPanel onClose={() => setActiveTab('calculator')} />
+                            </Suspense>
                         </motion.div>
                     )}
                 </AnimatePresence>
