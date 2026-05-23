@@ -4,11 +4,7 @@ import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calculator } from 'lucide-react';
 
-<<<<<<< HEAD
-const API_URL = import.meta.env.VITE_API_URL || https://calcnova-backend.onrender.com;
-=======
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
->>>>>>> dfceefb2557c05eb2d9a1b1afb016aa870f7cffb
+const API_URL = import.meta.env.VITE_API_URL || 'https://calcnova-backend.onrender.com';
 
 const ShareView = () => {
     const { id } = useParams();
