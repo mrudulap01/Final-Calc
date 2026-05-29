@@ -28,7 +28,7 @@ const pool = mysql.createPool({
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,
-    ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: true } : undefined
+    ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : undefined
 });
 
 // Middleware to inject DB pool
