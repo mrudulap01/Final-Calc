@@ -4,7 +4,7 @@ import axios from 'axios';
 const AuthContext = createContext();
 
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL || 'https://calcnova-backend.onrender.com'
+    baseURL: import.meta.env.VITE_API_URL || 'https://final-calc.onrender.com/api'
 });
 
 api.interceptors.request.use((config) => {
