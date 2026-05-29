@@ -45,6 +45,8 @@ router.post('/login', async (req, res) => {
             return res.status(401).json({ error: 'Invalid credentials' });
         }
 
+        await req.db.query('UPDATE Users SET last_login = CURRENT_TIMESTAMP WHERE id = ?', [user.id]);
+
         const token = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: '7d' });
         res.json({
             token,

@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS Users (
     avatar TEXT,
     preferred_theme VARCHAR(50) DEFAULT 'default',
     preferred_language VARCHAR(10) DEFAULT 'en',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_login TIMESTAMP NULL
 );
 
 CREATE TABLE IF NOT EXISTS History (
