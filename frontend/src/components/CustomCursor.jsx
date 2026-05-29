@@ -68,12 +68,12 @@ const CustomCursor = () => {
             animationFrame = requestAnimationFrame(loop);
         };
 
+        const handleMouseOut = () => setIsVisible(false);
+
         window.addEventListener('mousemove', moveCursor);
         window.addEventListener('mousedown', handleMouseDown);
         window.addEventListener('mouseup', handleMouseUp);
-
-        // Hide when leaving page
-        window.addEventListener('mouseout', () => setIsVisible(false));
+        window.addEventListener('mouseout', handleMouseOut);
 
         loop();
 
@@ -81,6 +81,7 @@ const CustomCursor = () => {
             window.removeEventListener('mousemove', moveCursor);
             window.removeEventListener('mousedown', handleMouseDown);
             window.removeEventListener('mouseup', handleMouseUp);
+            window.removeEventListener('mouseout', handleMouseOut);
             cancelAnimationFrame(animationFrame);
         };
     }, []);

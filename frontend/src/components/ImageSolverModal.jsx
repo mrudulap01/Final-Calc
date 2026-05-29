@@ -11,6 +11,14 @@ const ImageSolverModal = ({ isOpen, onClose, onSolve, setRobotState, setRobotMsg
     const [errorMsg, setErrorMsg] = useState('');
     const fileInputRef = useRef(null);
 
+    React.useEffect(() => {
+        return () => {
+            if (previewUrl) {
+                URL.revokeObjectURL(previewUrl);
+            }
+        };
+    }, [previewUrl]);
+
     const handleClose = () => {
         setPreviewUrl(null);
         setExtractedText('');
@@ -46,6 +54,7 @@ const ImageSolverModal = ({ isOpen, onClose, onSolve, setRobotState, setRobotMsg
 
     // IMAGE PREPROCESSING (Critical for Accuracy)
     const preprocessImage = (file) => {
+        const objectUrl = URL.createObjectURL(file);
         return new Promise((resolve, reject) => {
             const img = new Image();
             img.onload = () => {
@@ -85,10 +94,14 @@ const ImageSolverModal = ({ isOpen, onClose, onSolve, setRobotState, setRobotMsg
                 }
 
                 ctx.putImageData(imageData, 0, 0);
+                URL.revokeObjectURL(objectUrl);
                 resolve(canvas.toDataURL('image/png'));
             };
-            img.onerror = reject;
-            img.src = URL.createObjectURL(file);
+            img.onerror = (err) => {
+                URL.revokeObjectURL(objectUrl);
+                reject(err);
+            };
+            img.src = objectUrl;
         });
     };
 

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useAuth } from '../context/AuthContext';
 import { Camera, Upload, Trash2, X, LogOut } from 'lucide-react';
@@ -9,7 +9,6 @@ const AvatarMenu = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [previewUrl, setPreviewUrl] = useState(null);
     const [isUploading, setIsUploading] = useState(false);
-    const fileInputRef = useRef(null);
 
     const [currentAvatar, setCurrentAvatar] = useState(user?.avatar || null);
 

@@ -6,14 +6,12 @@ import Calculator from '../components/Calculator';
 import AssistantPanel from '../components/AssistantPanel';
 import AvatarMenu from '../components/AvatarMenu';
 import ThemeSelector from '../components/ThemeSelector';
-import { useLang } from '../context/LanguageContext';
 
 const HistoryPanel = lazy(() => import('../components/HistoryPanel'));
 const AnalyticsPanel = lazy(() => import('../components/AnalyticsPanel'));
 
 const Dashboard = () => {
     const { user, isOnline } = useAuth();
-    const { lang, setLang } = useLang();
     const [activeTab, setActiveTab] = useState('calculator'); // calculator, history, analytics
 
     return (

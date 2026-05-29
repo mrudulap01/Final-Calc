@@ -1,4 +1,4 @@
-import { rationalize, parse, simplify } from 'mathjs';
+import { rationalize } from 'mathjs';
 
 try {
     const expr = '5*x + 4 - (x + 10)';

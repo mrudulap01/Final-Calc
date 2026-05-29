@@ -23,10 +23,9 @@ router.post('/register', async (req, res) => {
 
         const token = jwt.sign({ userId: result.insertId }, JWT_SECRET, { expiresIn: '7d' });
         res.status(201).json({ token, user: { id: result.insertId, email } });
-        res.status(201).json({ token, user: { id: result.insertId, email } });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: err.message, stack: err.stack });
+        console.error('Registration error:', err);
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 
@@ -58,8 +57,8 @@ router.post('/login', async (req, res) => {
             }
         });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: err.message, stack: err.stack });
+        console.error('Login error:', err);
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 

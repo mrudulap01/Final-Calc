@@ -16,6 +16,7 @@ router.post('/', async (req, res) => {
         );
         res.status(201).json({ success: true });
     } catch (err) {
+        console.error('Error logging voice transcript:', err);
         res.status(500).json({ error: 'Internal server error' });
     }
 });

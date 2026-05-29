@@ -5,6 +5,7 @@ const RobotAssistant = ({ state = 'idle', message = "Ready to calculate!" }) => 
     // states: idle, happy, excited, confused, sleep, prime, curious, nerd
 
     const [blink, setBlink] = useState(false);
+    const [isWink, setIsWink] = useState(false);
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
     const containerRef = useRef(null);
     const [displayMsg, setDisplayMsg] = useState(message);
@@ -22,16 +23,22 @@ const RobotAssistant = ({ state = 'idle', message = "Ready to calculate!" }) => 
         }
     }, [message]);
 
-    // Random blinking
+    // Random blinking & winking
     useEffect(() => {
         const blinkInterval = setInterval(() => {
-            if (Math.random() > 0.5) {
-                setBlink(true);
-                setTimeout(() => setBlink(false), 200);
+            const rand = Math.random();
+            if (rand > 0.6) {
+                if (state === 'idle' && rand > 0.9) {
+                    setIsWink(true);
+                    setTimeout(() => setIsWink(false), 500);
+                } else {
+                    setBlink(true);
+                    setTimeout(() => setBlink(false), 200);
+                }
             }
         }, 3000);
         return () => clearInterval(blinkInterval);
-    }, []);
+    }, [state]);
 
     // Track mouse for pupils
     useEffect(() => {
@@ -64,7 +71,6 @@ const RobotAssistant = ({ state = 'idle', message = "Ready to calculate!" }) => 
         }
     };
 
-    const isWink = state === 'idle' && Math.random() > 0.95;
 
     const getEyes = () => {
         const renderEye = () => <span className="inline-block w-[6px] h-4 md:h-5 bg-[var(--color-primary)] rounded-full"></span>;

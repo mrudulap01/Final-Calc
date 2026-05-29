@@ -14,6 +14,7 @@ router.get('/share/:id', async (req, res) => {
         if (rows.length === 0) return res.status(404).json({ error: 'Not found' });
         res.json(rows[0]);
     } catch (err) {
+        console.error('Error fetching share item:', err);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
@@ -24,12 +25,16 @@ router.use(authenticate);
 router.post('/share', async (req, res) => {
     try {
         const { expression, result, mode } = req.body;
+        if (!expression || !result) {
+            return res.status(400).json({ error: 'Expression and result are required' });
+        }
         const [insert] = await req.db.query(
             'INSERT INTO History (user_id, expression, result, mode) VALUES (?, ?, ?, ?)',
             [req.userId, expression, result, mode || 'basic']
         );
         res.json({ id: insert.insertId });
     } catch (err) {
+        console.error('Error creating share item:', err);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
@@ -80,6 +85,7 @@ router.get('/', async (req, res) => {
         );
         res.json(rows);
     } catch (err) {
+        console.error('Error fetching history:', err);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
@@ -90,6 +96,7 @@ router.delete('/:id', async (req, res) => {
         await req.db.query('DELETE FROM History WHERE id = ? AND user_id = ?', [req.params.id, req.userId]);
         res.json({ success: true });
     } catch (err) {
+        console.error('Error deleting history item:', err);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
@@ -100,6 +107,7 @@ router.delete('/', async (req, res) => {
         await req.db.query('DELETE FROM History WHERE user_id = ?', [req.userId]);
         res.json({ success: true });
     } catch (err) {
+        console.error('Error clearing history:', err);
         res.status(500).json({ error: 'Internal server error' });
     }
 });

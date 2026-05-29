@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, Suspense, lazy } from 'react';
+import React, { useState, useEffect, useRef, Suspense, lazy, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import * as math from 'mathjs';
 import { Mic, MicOff, Download, Share2, Camera } from 'lucide-react';
@@ -32,7 +32,18 @@ const Calculator = () => {
     const badgeTimeoutRef = useRef(null);
 
     const [base, setBase] = useState('DEC');
-    const [conversions, setConversions] = useState({ HEX: '0', DEC: '0', OCT: '0', BIN: '0' });
+    const conversions = useMemo(() => {
+        if (mode === 'programmer' && result && !isNaN(result)) {
+            const dec = Math.floor(Number(result));
+            return {
+                DEC: dec.toString(10),
+                HEX: (dec >>> 0).toString(16).toUpperCase(),
+                OCT: (dec >>> 0).toString(8),
+                BIN: (dec >>> 0).toString(2)
+            };
+        }
+        return { HEX: '0', DEC: '0', OCT: '0', BIN: '0' };
+    }, [result, mode]);
 
     const isPrime = (num) => {
         if (num <= 1 || !Number.isInteger(num)) return false;
@@ -64,9 +75,6 @@ const Calculator = () => {
         setRobotMsg('Cleared!');
         setInsightBadge(null);
         setEquationSteps(null);
-        if (mode === 'programmer') {
-            setConversions({ HEX: '0', DEC: '0', OCT: '0', BIN: '0' });
-        }
     };
 
     const handleDelete = () => {
@@ -101,17 +109,6 @@ const Calculator = () => {
             .replace(/NOT/g, '~');
     };
 
-    useEffect(() => {
-        if (mode === 'programmer' && result && !isNaN(result)) {
-            const dec = Math.floor(Number(result));
-            setConversions({
-                DEC: dec.toString(10),
-                HEX: (dec >>> 0).toString(16).toUpperCase(),
-                OCT: (dec >>> 0).toString(8),
-                BIN: (dec >>> 0).toString(2)
-            });
-        }
-    }, [result, mode]);
 
     const handleEquals = () => {
         try {
@@ -173,7 +170,7 @@ const Calculator = () => {
             }
 
             saveToHistory(expr, resStr);
-        } catch (err) {
+        } catch {
             setResult('Error');
             setRobotState('confused');
             setRobotMsg('Invalid syntax!');
