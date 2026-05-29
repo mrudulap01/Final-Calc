@@ -5,7 +5,6 @@ import { Download, X, Share } from 'lucide-react';
 const InstallPrompt = () => {
     const [deferredPrompt, setDeferredPrompt] = useState(null);
     const [showInstallPrompt, setShowInstallPrompt] = useState(false);
-    const [isIOS, setIsIOS] = useState(false);
     const [showIOSPrompt, setShowIOSPrompt] = useState(false);
 
     useEffect(() => {
@@ -15,7 +14,6 @@ const InstallPrompt = () => {
         const isStandalone = window.navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches;
 
         if (isIosDevice && !isStandalone) {
-            setIsIOS(true);
             // Don't show immediately, maybe wait a bit or let user trigger it
             const timer = setTimeout(() => {
                 const hasSeenPrompt = localStorage.getItem('ios_install_prompt_dismissed');

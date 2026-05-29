@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, Suspense, lazy, useMemo } from 'react';
+import React, { useState, useEffect, useRef, Suspense, lazy, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import * as math from 'mathjs';
 import { Mic, MicOff, Download, Share2, Camera } from 'lucide-react';
@@ -61,39 +61,48 @@ const Calculator = () => {
     };
     const isPowerOf2 = (n) => n > 0 && Number.isInteger(n) && (n & (n - 1)) === 0;
 
-    const handleInput = (val) => {
+    // Refs for memoized callbacks
+    const exprRef = useRef(expr);
+    const modeRef = useRef(mode);
+    const apiRef = useRef(api);
+
+    useEffect(() => { exprRef.current = expr; }, [expr]);
+    useEffect(() => { modeRef.current = mode; }, [mode]);
+    useEffect(() => { apiRef.current = api; }, [api]);
+
+    const handleInput = useCallback((val) => {
         setExpr((prev) => prev + val);
         setRobotState('idle');
         setRobotMsg('Hmm...');
         setEquationSteps(null);
-    };
+    }, []);
 
-    const handleClear = () => {
+    const handleClear = useCallback(() => {
         setExpr('');
         setResult('');
         setRobotState('idle');
         setRobotMsg('Cleared!');
         setInsightBadge(null);
         setEquationSteps(null);
-    };
+    }, []);
 
-    const handleDelete = () => {
+    const handleDelete = useCallback(() => {
         setExpr((prev) => prev.slice(0, -1));
-    };
+    }, []);
 
-    const saveToHistory = async (expression, resultStr) => {
+    const saveToHistory = useCallback(async (expression, resultStr) => {
         try {
             if (!navigator.onLine) {
                 const offlines = JSON.parse(localStorage.getItem('calcnova_offlines') || '[]');
-                offlines.push({ expression, result: resultStr, mode });
+                offlines.push({ expression, result: resultStr, mode: modeRef.current });
                 localStorage.setItem('calcnova_offlines', JSON.stringify(offlines));
             } else {
-                await api.post('/history', { expression, result: resultStr, mode });
+                await apiRef.current.post('/history', { expression, result: resultStr, mode: modeRef.current });
             }
         } catch (err) {
             console.error(err);
         }
-    };
+    }, []);
 
     const formatExpressionForMathJs = (str) => {
         return str
@@ -110,19 +119,19 @@ const Calculator = () => {
     };
 
 
-    const handleEquals = () => {
+    const handleEquals = useCallback(() => {
+        const currentExpr = exprRef.current;
         try {
             setEquationSteps(null);
 
-            // Algebra Intercept
-            if (expr.includes('=') && /[a-zA-Z]/.test(expr)) {
-                const solveResult = solveAlgebraEquation(expr);
+            if (currentExpr.includes('=') && /[a-zA-Z]/.test(currentExpr)) {
+                const solveResult = solveAlgebraEquation(currentExpr);
                 if (solveResult.success) {
                     setResult(solveResult.result);
                     setEquationSteps(solveResult.steps);
                     setRobotState('nerd');
                     setRobotMsg('Nice! Algebra solved.');
-                    saveToHistory(expr, solveResult.result);
+                    saveToHistory(currentExpr, solveResult.result);
                     return;
                 } else {
                     setResult('Error');
@@ -132,7 +141,7 @@ const Calculator = () => {
                 }
             }
 
-            const evalExpr = formatExpressionForMathJs(expr);
+            const evalExpr = formatExpressionForMathJs(currentExpr);
             const res = math.evaluate(evalExpr);
 
             let resStr = res.toString();
@@ -150,7 +159,7 @@ const Calculator = () => {
                 } else if (isPrime(numRes)) {
                     setRobotState('prime');
                     setRobotMsg('Prime power!');
-                } else if (expr.length > 8 || expr.includes('sin') || expr.includes('cos') || expr.includes('log') || (expr.match(/[\+\-\*\/]/g) || []).length >= 3) {
+                } else if (currentExpr.length > 8 || currentExpr.includes('sin') || currentExpr.includes('cos') || currentExpr.includes('log') || (currentExpr.match(/[\+\-\*\/]/g) || []).length >= 3) {
                     setRobotState('curious');
                     setRobotMsg('Interesting pattern!');
                 } else {
@@ -158,7 +167,6 @@ const Calculator = () => {
                     setRobotMsg('Nice one!');
                 }
 
-                // Insights
                 if (isPrime(numRes)) setInsightBadge('Prime');
                 else if (isFibonacci(numRes)) setInsightBadge('Fibonacci');
                 else if (isPowerOf2(numRes)) setInsightBadge('Power of 2');
@@ -169,13 +177,13 @@ const Calculator = () => {
                 badgeTimeoutRef.current = setTimeout(() => setInsightBadge(null), 4000);
             }
 
-            saveToHistory(expr, resStr);
+            saveToHistory(currentExpr, resStr);
         } catch {
             setResult('Error');
             setRobotState('confused');
             setRobotMsg('Invalid syntax!');
         }
-    };
+    }, [saveToHistory]);
 
     const handleShare = async () => {
         if (!expr || !result || result === 'Error') return;
@@ -260,7 +268,7 @@ const Calculator = () => {
         }, 150);
     };
 
-    const handleKeyPress = (key) => {
+    const handleKeyPress = useCallback((key) => {
         if (key === '=') handleEquals();
         else if (key === 'C') handleClear();
         else if (key === 'DEL') handleDelete();
@@ -271,7 +279,7 @@ const Calculator = () => {
                 handleInput(key);
             }
         }
-    };
+    }, [handleEquals, handleClear, handleDelete, handleInput]);
 
     // Keyboard support (numpad + regular digits)
     useEffect(() => {
@@ -350,10 +358,10 @@ const Calculator = () => {
                 ref={displayRef}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                className={`w-full rounded-3xl p-6 shadow-2xl border backdrop-blur-xl relative transition-all duration-300 z-10 ${mode === 'basic' ? 'sm:max-w-md' : 'sm:max-w-xl'
+                className={`w-full rounded-[2rem] p-4 sm:p-6 shadow-2xl border md:backdrop-blur-xl relative transition-all duration-300 z-10 ${mode === 'basic' ? 'sm:max-w-md' : 'sm:max-w-xl'
                     }`}
                 style={{
-                    backgroundColor: 'rgba(var(--color-bg-panel), 0.85)',
+                    backgroundColor: 'var(--color-bg-base)', // Solid base on mobile for speed
                     borderColor: 'var(--color-border)'
                 }}
             >
@@ -386,11 +394,11 @@ const Calculator = () => {
                     </div>
 
                     <div className="flex items-center gap-1 sm:gap-2 ml-4">
-                        <button onClick={handleShare} className="p-2 rounded-lg opacity-60 hover:opacity-100 hover:bg-black/5 dark:hover:bg-white/5 transition-all text-main" title="Share via link">
-                            <Share2 size={18} />
+                        <button aria-label="Share Calculation" onClick={handleShare} className="p-3 sm:p-2 rounded-xl opacity-60 hover:opacity-100 hover:bg-black/5 dark:hover:bg-white/5 transition-all text-main" title="Share via link">
+                            <Share2 size={20} className="sm:w-[18px] sm:h-[18px]" />
                         </button>
-                        <button onClick={handleExportPNG} className="p-2 rounded-lg opacity-60 hover:opacity-100 hover:bg-black/5 dark:hover:bg-white/5 transition-all text-main border border-transparent shadow-sm" title="Export as Image (PNG)">
-                            <Download size={18} />
+                        <button aria-label="Export as Image" onClick={handleExportPNG} className="p-3 sm:p-2 rounded-xl opacity-60 hover:opacity-100 hover:bg-black/5 dark:hover:bg-white/5 transition-all text-main border border-transparent shadow-sm" title="Export as Image (PNG)">
+                            <Download size={20} className="sm:w-[18px] sm:h-[18px]" />
                         </button>
                     </div>
 
@@ -407,20 +415,22 @@ const Calculator = () => {
                 >
                     <div className="absolute top-3 left-3 flex gap-2">
                         <button
+                            aria-label="Toggle Voice Input"
                             onClick={toggleVoiceInput}
-                            className={`p-2 rounded-full transition-all ${isListening ? 'bg-red-500 text-white animate-pulse shadow-lg shadow-red-500/50' : 'opacity-40 hover:opacity-100 hover:bg-black/10 dark:hover:bg-white/10 text-main'
+                            className={`p-3 sm:p-2 rounded-full transition-all ${isListening ? 'bg-red-500 text-white animate-pulse shadow-lg shadow-red-500/50' : 'opacity-40 hover:opacity-100 hover:bg-black/10 dark:hover:bg-white/10 text-main'
                                 }`}
                             title="Voice Input (Speech to Math)"
                         >
-                            {isListening ? <MicOff size={16} /> : <Mic size={16} />}
+                            {isListening ? <MicOff size={20} className="sm:w-4 sm:h-4" /> : <Mic size={20} className="sm:w-4 sm:h-4" />}
                         </button>
 
                         <button
+                            aria-label="Scan Equation from Image"
                             onClick={() => setIsImageModalOpen(true)}
-                            className="p-2 rounded-full transition-all opacity-40 hover:opacity-100 hover:bg-black/10 dark:hover:bg-white/10 text-main"
+                            className="p-3 sm:p-2 rounded-full transition-all opacity-40 hover:opacity-100 hover:bg-black/10 dark:hover:bg-white/10 text-main"
                             title="Scan Image Equation"
                         >
-                            <Camera size={16} />
+                            <Camera size={20} className="sm:w-4 sm:h-4" />
                         </button>
                     </div>
 

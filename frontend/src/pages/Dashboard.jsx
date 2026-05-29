@@ -17,9 +17,9 @@ const Dashboard = () => {
     return (
         <div className="flex-grow flex flex-col min-h-[100dvh] overflow-x-hidden relative">
             {/* Header */}
-            <header className="h-16 flex items-center justify-between px-6 backdrop-blur-md border-b z-20 relative"
+            <header className="h-20 sm:h-16 flex items-center justify-between px-4 sm:px-6 backdrop-blur-md border-b z-20 relative"
                 style={{
-                    backgroundColor: 'rgba(var(--color-bg-panel), 0.7)',
+                    backgroundColor: 'rgba(var(--color-bg-panel), 0.9)',
                     borderColor: 'var(--color-border)',
                 }}
             >
@@ -34,11 +34,11 @@ const Dashboard = () => {
                 {/* Center: Tabs */}
                 <div className="flex-1 flex items-center justify-center gap-3">
 
-                    <button onClick={() => setActiveTab('history')} className={`p-2 rounded-lg transition-colors ${activeTab === 'history' ? 'bg-black/10 dark:bg-white/10' : 'hover:bg-black/5 dark:hover:bg-white/5'}`} title="History">
-                        <History size={20} />
+                    <button aria-label="View History" onClick={() => setActiveTab('history')} className={`p-3 rounded-xl transition-colors ${activeTab === 'history' ? 'bg-black/10 dark:bg-white/10 shadow-inner' : 'hover:bg-black/5 dark:hover:bg-white/5'}`} title="History">
+                        <History size={24} />
                     </button>
-                    <button onClick={() => setActiveTab('analytics')} className={`p-2 rounded-lg transition-colors ${activeTab === 'analytics' ? 'bg-black/10 dark:bg-white/10' : 'hover:bg-black/5 dark:hover:bg-white/5'}`} title="Analytics">
-                        <BarChart2 size={20} />
+                    <button aria-label="View Analytics" onClick={() => setActiveTab('analytics')} className={`p-3 rounded-xl transition-colors ${activeTab === 'analytics' ? 'bg-black/10 dark:bg-white/10 shadow-inner' : 'hover:bg-black/5 dark:hover:bg-white/5'}`} title="Analytics">
+                        <BarChart2 size={24} />
                     </button>
                 </div>
 
@@ -91,7 +91,14 @@ const Dashboard = () => {
                             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
                             className="absolute top-0 left-0 h-full z-40 w-[85vw] sm:w-[400px] max-w-md shadow-2xl"
                         >
-                            <Suspense fallback={<div className="p-8 text-center bg-panel/90 text-main h-full flex items-center justify-center animate-pulse" style={{ backgroundColor: 'rgba(var(--color-bg-panel), 0.95)', color: 'var(--color-text-main)' }}>Loading history...</div>}>
+                            <Suspense fallback={
+                                <div className="p-6 h-full flex flex-col gap-4 animate-pulse w-full bg-panel" style={{ backgroundColor: 'var(--color-bg-panel)' }}>
+                                    <div className="h-8 bg-black/10 dark:bg-white/10 rounded-lg w-1/3 mb-4" />
+                                    {[1, 2, 3, 4].map(i => (
+                                        <div key={i} className="h-24 bg-black/5 dark:bg-white/5 rounded-2xl w-full" />
+                                    ))}
+                                </div>
+                            }>
                                 <HistoryPanel onClose={() => setActiveTab('calculator')} />
                             </Suspense>
                         </motion.div>
@@ -108,7 +115,15 @@ const Dashboard = () => {
                             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
                             className="absolute top-0 right-0 h-full z-40 w-[90vw] sm:w-[600px] lg:w-[800px] max-w-4xl shadow-2xl"
                         >
-                            <Suspense fallback={<div className="p-8 text-center bg-panel/90 text-main h-full flex items-center justify-center animate-pulse" style={{ backgroundColor: 'rgba(var(--color-bg-panel), 0.95)', color: 'var(--color-text-main)' }}>Loading analytics...</div>}>
+                            <Suspense fallback={
+                                <div className="p-6 h-full flex flex-col gap-8 animate-pulse w-full bg-panel" style={{ backgroundColor: 'var(--color-bg-panel)' }}>
+                                    <div className="h-8 bg-black/10 dark:bg-white/10 rounded-lg w-1/4 mb-2" />
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
+                                        <div className="aspect-square bg-black/5 dark:bg-white/5 rounded-full mx-auto w-[250px]" />
+                                        <div className="h-64 bg-black/5 dark:bg-white/5 rounded-2xl w-full" />
+                                    </div>
+                                </div>
+                            }>
                                 <AnalyticsPanel onClose={() => setActiveTab('calculator')} />
                             </Suspense>
                         </motion.div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import CalculatorButton from '../CalculatorButton';
 
 const ProgrammerKeypad = ({ onKeyPress, base, setBase, conversions }) => {
@@ -86,4 +86,4 @@ const ProgrammerKeypad = ({ onKeyPress, base, setBase, conversions }) => {
     );
 };
 
-export default ProgrammerKeypad;
+export default memo(ProgrammerKeypad);

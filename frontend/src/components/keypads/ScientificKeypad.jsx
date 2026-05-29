@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import CalculatorButton from '../CalculatorButton';
 
 const ScientificKeypad = ({ onKeyPress }) => {
@@ -41,4 +41,4 @@ const ScientificKeypad = ({ onKeyPress }) => {
     );
 };
 
-export default ScientificKeypad;
+export default memo(ScientificKeypad);
