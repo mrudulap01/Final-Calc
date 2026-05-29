@@ -17,12 +17,3 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </BrowserRouter>
   </React.StrictMode>,
 );
-
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').then(
-      () => console.log('ServiceWorker registration successful'),
-      (err) => console.log('ServiceWorker registration failed: ', err)
-    );
-  });
-}

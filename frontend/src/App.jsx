@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 import FloatingBackground from './components/FloatingBackground';
+import InstallPrompt from './components/InstallPrompt';
 
 const Login = lazy(() => import('./pages/Login'));
 const Register = lazy(() => import('./pages/Register'));
@@ -19,6 +20,7 @@ function App() {
     <div className="min-h-[100dvh] relative overflow-x-hidden flex flex-col font-sans">
       {/* Global Animated Background */}
       <FloatingBackground />
+      <InstallPrompt />
 
       <div className="relative z-10 flex-grow flex flex-col" style={{ position: 'relative', zIndex: 10 }}>
         <Suspense fallback={
