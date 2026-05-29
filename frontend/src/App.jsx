@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 import FloatingBackground from './components/FloatingBackground';
 import InstallPrompt from './components/InstallPrompt';
+import UpdatePrompt from './components/UpdatePrompt';
 
 const Login = lazy(() => import('./pages/Login'));
 const Register = lazy(() => import('./pages/Register'));
@@ -21,6 +22,7 @@ function App() {
       {/* Global Animated Background */}
       <FloatingBackground />
       <InstallPrompt />
+      <UpdatePrompt />
 
       <div className="relative z-10 flex-grow flex flex-col" style={{ position: 'relative', zIndex: 10 }}>
         <Suspense fallback={
