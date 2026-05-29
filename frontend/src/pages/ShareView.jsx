@@ -51,7 +51,7 @@ const ShareView = () => {
     }
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-base text-main p-4 relative overflow-hidden" style={{ backgroundColor: 'var(--color-bg-base)' }}>
+        <div className="min-h-[100dvh] flex flex-col items-center justify-center bg-base text-main p-4 relative overflow-hidden" style={{ backgroundColor: 'var(--color-bg-base)' }}>
 
             <header className="absolute top-0 left-0 w-full p-6 flex justify-between items-center z-10">
                 <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r"
@@ -89,7 +89,7 @@ const ShareView = () => {
                     <div className="text-right text-2xl sm:text-3xl mb-2 opacity-70 break-all w-full font-mono tracking-wide">
                         {data.expression}
                     </div>
-                    <div className="text-right text-5xl sm:text-6xl font-extrabold tracking-tight break-all" style={{ color: 'var(--color-primary)' }}>
+                    <div className="text-right text-4xl sm:text-6xl font-extrabold tracking-tight break-all" style={{ color: 'var(--color-primary)' }}>
                         {data.result}
                     </div>
                 </div>

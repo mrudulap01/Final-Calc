@@ -446,7 +446,7 @@ const Calculator = () => {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -20 }}
-                            className="text-right text-4xl sm:text-5xl font-extrabold tracking-tight break-all"
+                            className="text-right text-3xl sm:text-5xl font-extrabold tracking-tight break-all"
                             style={{ color: 'var(--color-primary)' }}
                         >
                             {result || '0'}

@@ -16,7 +16,7 @@ const PrivateRoute = ({ children }) => {
 
 function App() {
   return (
-    <div className="min-h-screen relative overflow-hidden flex flex-col font-sans">
+    <div className="min-h-[100dvh] relative overflow-x-hidden flex flex-col font-sans">
       {/* Global Animated Background */}
       <FloatingBackground />
 

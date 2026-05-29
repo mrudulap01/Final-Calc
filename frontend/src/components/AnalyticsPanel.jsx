@@ -130,7 +130,7 @@ const AnalyticsPanel = ({ onClose }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="p-6 rounded-2xl border flex flex-col items-center" style={{ borderColor: 'var(--color-border)', backgroundColor: 'var(--color-bg-base)' }}>
                     <h3 className="font-bold text-lg mb-6 self-start">Mode Distribution</h3>
-                    <div className="w-64 h-64">
+                    <div className="w-full max-w-[250px] aspect-square">
                         {stats?.modeDistribution?.length > 0 ? (
                             <Doughnut data={modeData} options={{ maintainAspectRatio: false }} />
                         ) : (

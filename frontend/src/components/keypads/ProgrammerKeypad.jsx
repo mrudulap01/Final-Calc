@@ -42,7 +42,7 @@ const ProgrammerKeypad = ({ onKeyPress, base, setBase, conversions }) => {
                     {hexKeys.map(k => (
                         <CalculatorButton
                             key={k} label={k} variant="action"
-                            className={`h-10 text-sm ${isDisabled(k) ? 'opacity-30 pointer-events-none' : ''}`}
+                            className={`min-h-[44px] h-10 text-sm ${isDisabled(k) ? 'opacity-30 pointer-events-none' : ''}`}
                             onClick={onKeyPress}
                         />
                     ))}
@@ -54,7 +54,7 @@ const ProgrammerKeypad = ({ onKeyPress, base, setBase, conversions }) => {
                         {bitwiseKeys.map(k => (
                             <CalculatorButton
                                 key={k} label={k} variant="operator"
-                                className="h-10 text-xs shadow-sm bg-secondary"
+                                className="min-h-[44px] h-10 text-xs shadow-sm bg-secondary"
                                 onClick={onKeyPress}
                             />
                         ))}
@@ -74,7 +74,7 @@ const ProgrammerKeypad = ({ onKeyPress, base, setBase, conversions }) => {
                                     label={key}
                                     variant={variant}
                                     colSpan={colSpan}
-                                    className={`h-10 text-lg font-semibold ${isDisabled(key) ? 'opacity-30 pointer-events-none' : ''}`}
+                                    className={`min-h-[44px] h-10 text-lg font-semibold ${isDisabled(key) ? 'opacity-30 pointer-events-none' : ''}`}
                                     onClick={onKeyPress}
                                 />
                             );

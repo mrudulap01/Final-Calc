@@ -15,7 +15,7 @@ const Dashboard = () => {
     const [activeTab, setActiveTab] = useState('calculator'); // calculator, history, analytics
 
     return (
-        <div className="flex-grow flex flex-col h-screen overflow-hidden relative">
+        <div className="flex-grow flex flex-col min-h-[100dvh] overflow-x-hidden relative">
             {/* Header */}
             <header className="h-16 flex items-center justify-between px-6 backdrop-blur-md border-b z-20 relative"
                 style={{
@@ -59,7 +59,7 @@ const Dashboard = () => {
             </header>
 
             {/* Main Area */}
-            <main className="flex-grow flex items-center justify-center p-4 overflow-hidden relative z-10">
+            <main className="flex-grow flex flex-col items-center justify-center p-2 sm:p-4 overflow-x-hidden relative z-10 py-6">
                 {/* Calculator Always Visible */}
                 <div className="flex items-center justify-center w-full max-w-5xl h-full relative z-10">
                     <Calculator />
@@ -89,7 +89,7 @@ const Dashboard = () => {
                             animate={{ x: 0, opacity: 1 }}
                             exit={{ x: '-100%', opacity: 0 }}
                             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                            className="absolute top-0 left-0 h-full z-40 w-full max-w-md shadow-2xl"
+                            className="absolute top-0 left-0 h-full z-40 w-[85vw] sm:w-[400px] max-w-md shadow-2xl"
                         >
                             <Suspense fallback={<div className="p-8 text-center bg-panel/90 text-main h-full flex items-center justify-center animate-pulse" style={{ backgroundColor: 'rgba(var(--color-bg-panel), 0.95)', color: 'var(--color-text-main)' }}>Loading history...</div>}>
                                 <HistoryPanel onClose={() => setActiveTab('calculator')} />
@@ -106,7 +106,7 @@ const Dashboard = () => {
                             animate={{ x: 0, opacity: 1 }}
                             exit={{ x: '100%', opacity: 0 }}
                             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                            className="absolute top-0 right-0 h-full z-40 w-full max-w-4xl shadow-2xl"
+                            className="absolute top-0 right-0 h-full z-40 w-[90vw] sm:w-[600px] lg:w-[800px] max-w-4xl shadow-2xl"
                         >
                             <Suspense fallback={<div className="p-8 text-center bg-panel/90 text-main h-full flex items-center justify-center animate-pulse" style={{ backgroundColor: 'rgba(var(--color-bg-panel), 0.95)', color: 'var(--color-text-main)' }}>Loading analytics...</div>}>
                                 <AnalyticsPanel onClose={() => setActiveTab('calculator')} />

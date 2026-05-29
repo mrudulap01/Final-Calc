@@ -248,7 +248,7 @@ const ImageSolverModal = ({ isOpen, onClose, onSolve, setRobotState, setRobotMsg
                     initial={{ opacity: 0, scale: 0.95, y: 20 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                    className="w-full max-w-md bg-panel p-6 rounded-3xl shadow-2xl border pointer-events-auto flex flex-col items-center relative"
+                    className="w-[95vw] sm:w-full max-w-md max-h-[90dvh] overflow-y-auto bg-panel p-6 rounded-3xl shadow-2xl border pointer-events-auto flex flex-col items-center relative"
                     style={{ backgroundColor: 'var(--color-bg-panel)', borderColor: 'var(--color-border)' }}
                 >
                     <button

@@ -31,7 +31,7 @@ const Register = () => {
                 initial={{ opacity: 0, scale: 0.95, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 transition={{ duration: 0.4, ease: 'easeOut' }}
-                className="w-full max-w-md p-8 rounded-2xl backdrop-blur-md shadow-2xl border"
+                className="w-full max-w-md p-6 sm:p-8 rounded-2xl backdrop-blur-md shadow-2xl border"
                 style={{
                     backgroundColor: 'rgba(var(--color-bg-panel), 0.8)',
                     borderColor: 'var(--color-border)',
