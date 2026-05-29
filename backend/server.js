@@ -9,6 +9,7 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(cors({
     origin: [
+        'https://final-calc-seven.vercel.app',
         'https://final-calc-etu3.vercel.app', 
         'http://localhost:5173'
     ],
