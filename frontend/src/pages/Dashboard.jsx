@@ -15,7 +15,7 @@ const Dashboard = () => {
     const [activeTab, setActiveTab] = useState('calculator'); // calculator, history, analytics
 
     return (
-        <div className="flex-grow flex flex-col min-h-[100dvh] overflow-x-hidden relative">
+        <div className="flex-grow flex flex-col h-[100dvh] max-h-[100dvh] overflow-hidden relative">
             {/* Header */}
             <header className="h-20 sm:h-16 flex items-center justify-between px-4 sm:px-6 backdrop-blur-md border-b z-20 relative"
                 style={{
@@ -59,7 +59,7 @@ const Dashboard = () => {
             </header>
 
             {/* Main Area */}
-            <main className="flex-grow flex flex-col items-center justify-center p-2 sm:p-4 overflow-x-hidden relative z-10 py-6">
+            <main className="flex-grow flex flex-col items-center justify-center p-1 sm:p-4 overflow-hidden relative z-10">
                 {/* Calculator Always Visible */}
                 <div className="flex items-center justify-center w-full max-w-5xl h-full relative z-10">
                     <Calculator />

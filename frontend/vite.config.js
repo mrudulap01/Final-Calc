@@ -39,7 +39,7 @@ export default defineConfig({
         cleanupOutdatedCaches: true,
         runtimeCaching: [
           {
-            urlPattern: /^https:\/\/final-calc\.onrender\.com\/api\/.*/i,
+            urlPattern: /^https:\/\/final-calc\.onrender\.com\/api\/(?!health).*/i,
             handler: 'NetworkFirst',
             options: {
               cacheName: 'api-cache',

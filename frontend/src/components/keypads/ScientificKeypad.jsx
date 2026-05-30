@@ -13,7 +13,7 @@ const ScientificKeypad = ({ onKeyPress }) => {
     ];
 
     return (
-        <div className="grid grid-cols-5 gap-2">
+        <div className="grid grid-cols-5 gap-[clamp(0.2rem,1vh,0.5rem)]">
             {keys.flat().map((key) => {
                 let variant = 'default';
                 let colSpan = 1;
@@ -32,7 +32,7 @@ const ScientificKeypad = ({ onKeyPress }) => {
                         label={key}
                         variant={variant}
                         colSpan={colSpan}
-                        className={`h-12 ${colSpan > 1 ? 'text-2xl' : 'text-sm'} font-semibold`}
+                        className={`h-[clamp(2.5rem,6vh,3.5rem)] font-semibold`}
                         onClick={onKeyPress}
                     />
                 );

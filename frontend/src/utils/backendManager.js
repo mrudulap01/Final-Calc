@@ -32,8 +32,13 @@ export const waitForBackend = async (onStateChange) => {
                 // Aggressive 4s timeout for the health check itself
                 const timeoutId = setTimeout(() => controller.abort(), 4000); 
                 
-                const response = await fetch(`${API_URL}/health`, { 
+                const response = await fetch(`${API_URL}/health?_t=${Date.now()}`, { 
                     method: 'GET',
+                    cache: 'no-store',
+                    headers: {
+                        'Pragma': 'no-cache',
+                        'Cache-Control': 'no-cache'
+                    },
                     signal: controller.signal 
                 });
                 

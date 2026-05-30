@@ -11,7 +11,7 @@ const BasicKeypad = ({ onKeyPress }) => {
     ];
 
     return (
-        <div className="grid grid-cols-4 gap-3">
+        <div className="grid grid-cols-4 gap-[clamp(0.25rem,1.5vh,0.75rem)]">
             {keys.flat().map((key) => {
                 let variant = 'default';
                 let colSpan = 1;
@@ -26,7 +26,7 @@ const BasicKeypad = ({ onKeyPress }) => {
                         label={key}
                         variant={variant}
                         colSpan={colSpan}
-                        className="h-16 text-2xl font-semibold"
+                        className="h-[clamp(3rem,8vh,4rem)]"
                         onClick={onKeyPress}
                     />
                 );

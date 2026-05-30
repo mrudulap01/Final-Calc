@@ -358,19 +358,15 @@ const Calculator = () => {
                 ref={displayRef}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                className={`w-full rounded-[2rem] p-4 sm:p-6 shadow-2xl border md:backdrop-blur-xl relative transition-all duration-300 z-10 ${mode === 'basic' ? 'sm:max-w-md' : 'sm:max-w-xl'
+                className={`w-[98%] sm:w-full rounded-[1.5rem] sm:rounded-[2rem] p-[clamp(0.5rem,2vh,1.5rem)] shadow-2xl border md:backdrop-blur-xl relative transition-all duration-300 z-10 flex flex-col max-h-full ${mode === 'basic' ? 'sm:max-w-md' : 'sm:max-w-xl'
                     }`}
                 style={{
                     backgroundColor: 'var(--color-bg-base)', // Solid base on mobile for speed
                     borderColor: 'var(--color-border)'
                 }}
             >
-                {/* Mobile Robot (top right context) */}
-                <div className="absolute -top-4 -right-2 sm:hidden scale-50 z-20 origin-top-right">
-                    <RobotAssistant state={robotState} message={robotMsg} />
-                </div>
-
-                <div className="flex justify-between items-end mb-6">
+                {/* Mobile Robot completely removed for viewport optimization */}
+                <div className="flex justify-between items-end mb-2 sm:mb-6">
                     <div className="flex bg-black/5 dark:bg-white/5 p-1 rounded-xl items-center w-full justify-between sm:justify-start gap-2">
                         {['basic', 'scientific', 'programmer'].map((m) => (
                             <button
@@ -410,7 +406,7 @@ const Calculator = () => {
                 </div>
 
                 <div
-                    className="w-full flex flex-col items-end mb-6 bg-black/5 dark:bg-white/5 p-4 rounded-2xl border min-h-[120px] justify-end overflow-hidden relative group"
+                    className="w-full flex flex-col items-end mb-2 sm:mb-6 bg-black/5 dark:bg-white/5 p-3 sm:p-4 rounded-2xl border min-h-[clamp(60px,15vh,120px)] justify-end overflow-hidden relative group"
                     style={{ borderColor: 'var(--color-border)' }}
                 >
                     <div className="absolute top-3 left-3 flex gap-2">
@@ -434,7 +430,7 @@ const Calculator = () => {
                         </button>
                     </div>
 
-                    <div className="text-right text-xl sm:text-2xl mb-1 opacity-70 break-all w-full font-mono tracking-wide relative">
+                    <div className="text-right text-[clamp(1rem,3vh,1.5rem)] mb-1 opacity-70 break-all w-full font-mono tracking-wide relative">
                         <AnimatePresence>
                             {insightBadge && (
                                 <motion.div
@@ -456,7 +452,7 @@ const Calculator = () => {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -20 }}
-                            className="text-right text-3xl sm:text-5xl font-extrabold tracking-tight break-all"
+                            className="text-right text-[clamp(2rem,6vh,3rem)] font-extrabold tracking-tight break-all"
                             style={{ color: 'var(--color-primary)' }}
                         >
                             {result || '0'}

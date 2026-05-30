@@ -86,7 +86,7 @@ const CalculatorButton = memo(({
                 relative flex items-center justify-center font-medium rounded-[1.25rem]
                 transition-all duration-200 overflow-hidden select-none active:brightness-90
                 ${colSpan === 2 ? 'col-span-2' : ''}
-                ${variant === 'operator' ? 'text-2xl sm:text-3xl font-extrabold' : 'text-xl sm:text-2xl'}
+                ${variant === 'operator' ? 'font-extrabold text-[clamp(1.5rem,4vh,1.875rem)]' : 'text-[clamp(1.25rem,3.5vh,1.5rem)]'}
                 ${className}
             `}
             whileHover={{ scale: hoverScale, y: -2 }}

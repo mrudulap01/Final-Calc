@@ -21,9 +21,9 @@ const ProgrammerKeypad = ({ onKeyPress, base, setBase, conversions }) => {
     };
 
     return (
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-[clamp(0.25rem,1vh,0.75rem)]">
             {/* Live conversions */}
-            <div className="grid grid-cols-4 gap-2 mb-2 p-2 rounded-lg bg-black/5 dark:bg-white/5 border border-border">
+            <div className="grid grid-cols-4 gap-[clamp(0.2rem,0.5vh,0.5rem)] mb-[clamp(0.2rem,0.5vh,0.5rem)] p-2 rounded-lg bg-black/5 dark:bg-white/5 border border-border">
                 {['HEX', 'DEC', 'OCT', 'BIN'].map(b => (
                     <div
                         key={b}
@@ -42,7 +42,7 @@ const ProgrammerKeypad = ({ onKeyPress, base, setBase, conversions }) => {
                     {hexKeys.map(k => (
                         <CalculatorButton
                             key={k} label={k} variant="action"
-                            className={`min-h-[44px] h-10 text-sm ${isDisabled(k) ? 'opacity-30 pointer-events-none' : ''}`}
+                            className={`h-[clamp(2.5rem,6vh,3rem)] text-sm ${isDisabled(k) ? 'opacity-30 pointer-events-none' : ''}`}
                             onClick={onKeyPress}
                         />
                     ))}
@@ -54,7 +54,7 @@ const ProgrammerKeypad = ({ onKeyPress, base, setBase, conversions }) => {
                         {bitwiseKeys.map(k => (
                             <CalculatorButton
                                 key={k} label={k} variant="operator"
-                                className="min-h-[44px] h-10 text-xs shadow-sm bg-secondary"
+                                className="h-[clamp(2.5rem,6vh,3rem)] text-[10px] sm:text-xs shadow-sm bg-secondary"
                                 onClick={onKeyPress}
                             />
                         ))}
@@ -74,7 +74,7 @@ const ProgrammerKeypad = ({ onKeyPress, base, setBase, conversions }) => {
                                     label={key}
                                     variant={variant}
                                     colSpan={colSpan}
-                                    className={`min-h-[44px] h-10 text-lg font-semibold ${isDisabled(key) ? 'opacity-30 pointer-events-none' : ''}`}
+                                    className={`h-[clamp(2.5rem,6vh,3rem)] text-[clamp(1rem,2vh,1.25rem)] font-semibold ${isDisabled(key) ? 'opacity-30 pointer-events-none' : ''}`}
                                     onClick={onKeyPress}
                                 />
                             );
