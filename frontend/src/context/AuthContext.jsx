@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import { waitForBackend } from '../utils/backendManager';
+import BackendWakeupScreen from '../components/BackendWakeupScreen';
 
 const AuthContext = createContext();
 
@@ -20,6 +22,11 @@ export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(localStorage.getItem('calcnova_token'));
     const [loading, setLoading] = useState(true);
     const [isOnline, setIsOnline] = useState(true);
+    const [backendStatus, setBackendStatus] = useState('checking');
+
+    const checkBackend = async () => {
+        return await waitForBackend(setBackendStatus);
+    };
 
     const logout = () => {
         localStorage.removeItem('calcnova_token');
@@ -53,6 +60,13 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const fetchProfile = async () => {
             if (token) {
+                const isReady = await checkBackend();
+                if (!isReady) {
+                    // Backend completely failed to wake up after all retries.
+                    setLoading(false);
+                    return; 
+                }
+
                 try {
                     const res = await api.get('/auth/profile');
                     setUser(res.data);
@@ -79,8 +93,9 @@ export const AuthProvider = ({ children }) => {
     }, [token]);
 
     return (
-        <AuthContext.Provider value={{ user, token, loading, isOnline, login, register, logout, deleteAccount, api }}>
+        <AuthContext.Provider value={{ user, token, loading, isOnline, login, register, logout, deleteAccount, api, checkBackend }}>
             {children}
+            <BackendWakeupScreen status={backendStatus} />
         </AuthContext.Provider>
     );
 };

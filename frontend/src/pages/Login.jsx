@@ -8,16 +8,24 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const { login } = useAuth();
+    const { login, checkBackend } = useAuth();
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         setError('');
+        
+        const isReady = await checkBackend();
+        if (!isReady) {
+            setError('Server connection failed. Please check if the backend is running.');
+            setLoading(false);
+            return;
+        }
+
         try {
             await login(email, password);
-            navigate('/');
+            navigate('/dashboard');
         } catch (err) {
             setError(err.response?.data?.error || err.response?.data?.message || 'Server connection failed. Please check if the backend is running.');
         } finally {
