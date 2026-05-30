@@ -24,7 +24,11 @@ router.post('/register', async (req, res) => {
         const token = jwt.sign({ userId: result.insertId }, JWT_SECRET, { expiresIn: '7d' });
         res.status(201).json({ token, user: { id: result.insertId, email } });
     } catch (err) {
-        console.error('Registration error:', err);
+        console.error("REGISTER ERROR", {
+            email: req.body?.email,
+            message: err.message,
+            stack: err.stack
+        });
         res.status(500).json({ error: 'Internal server error' });
     }
 });
@@ -59,7 +63,11 @@ router.post('/login', async (req, res) => {
             }
         });
     } catch (err) {
-        console.error('Login error:', err);
+        console.error("LOGIN ERROR", {
+            email: req.body?.email,
+            message: err.message,
+            stack: err.stack
+        });
         res.status(500).json({ error: 'Internal server error' });
     }
 });
@@ -86,6 +94,11 @@ router.get('/profile', authenticate, async (req, res) => {
         if (users.length === 0) return res.status(404).json({ error: 'User not found' });
         res.json(users[0]);
     } catch (err) {
+        console.error("PROFILE FETCH ERROR", {
+            userId: req.userId,
+            message: err.message,
+            stack: err.stack
+        });
         res.status(500).json({ error: 'Internal server error' });
     }
 });
@@ -97,6 +110,12 @@ router.put('/profile/theme', authenticate, async (req, res) => {
         await req.db.query('UPDATE Users SET preferred_theme = ? WHERE id = ?', [theme, req.userId]);
         res.json({ success: true, theme });
     } catch (err) {
+        console.error("THEME UPDATE ERROR", {
+            userId: req.userId,
+            theme: req.body?.theme,
+            message: err.message,
+            stack: err.stack
+        });
         res.status(500).json({ error: 'Internal server error' });
     }
 });
@@ -108,7 +127,11 @@ router.put('/profile/avatar', authenticate, async (req, res) => {
         await req.db.query('UPDATE Users SET avatar = ? WHERE id = ?', [avatar, req.userId]);
         res.json({ success: true });
     } catch (err) {
-        console.error(err);
+        console.error("AVATAR UPDATE ERROR", {
+            userId: req.userId,
+            message: err.message,
+            stack: err.stack
+        });
         res.status(500).json({ error: 'Internal server error' });
     }
 });
@@ -119,7 +142,11 @@ router.delete('/account', authenticate, async (req, res) => {
         await req.db.query('DELETE FROM Users WHERE id = ?', [req.userId]);
         res.json({ success: true });
     } catch (err) {
-        console.error(err);
+        console.error("ACCOUNT DELETE ERROR", {
+            userId: req.userId,
+            message: err.message,
+            stack: err.stack
+        });
         res.status(500).json({ error: 'Internal server error' });
     }
 });
