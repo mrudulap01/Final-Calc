@@ -32,7 +32,7 @@ const ScientificKeypad = ({ onKeyPress }) => {
                         label={key}
                         variant={variant}
                         colSpan={colSpan}
-                        className={`h-[clamp(2.5rem,6vh,3.5rem)] font-semibold`}
+                        className={`h-[clamp(2rem,5vh,3rem)] md:h-[clamp(2.5rem,6vh,3.5rem)] font-semibold`}
                         onClick={onKeyPress}
                     />
                 );

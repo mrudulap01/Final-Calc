@@ -26,7 +26,7 @@ const BasicKeypad = ({ onKeyPress }) => {
                         label={key}
                         variant={variant}
                         colSpan={colSpan}
-                        className="h-[clamp(3rem,8vh,4rem)]"
+                        className="h-[clamp(2.5rem,6vh,4rem)] md:h-[clamp(3rem,8vh,4rem)]"
                         onClick={onKeyPress}
                     />
                 );

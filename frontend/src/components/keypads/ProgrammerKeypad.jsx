@@ -42,7 +42,7 @@ const ProgrammerKeypad = ({ onKeyPress, base, setBase, conversions }) => {
                     {hexKeys.map(k => (
                         <CalculatorButton
                             key={k} label={k} variant="action"
-                            className={`h-[clamp(2.5rem,6vh,3rem)] text-sm ${isDisabled(k) ? 'opacity-30 pointer-events-none' : ''}`}
+                            className={`h-[clamp(2rem,4.5vh,2.5rem)] md:h-[clamp(2.5rem,6vh,3rem)] text-sm ${isDisabled(k) ? 'opacity-30 pointer-events-none' : ''}`}
                             onClick={onKeyPress}
                         />
                     ))}
@@ -54,7 +54,7 @@ const ProgrammerKeypad = ({ onKeyPress, base, setBase, conversions }) => {
                         {bitwiseKeys.map(k => (
                             <CalculatorButton
                                 key={k} label={k} variant="operator"
-                                className="h-[clamp(2.5rem,6vh,3rem)] text-[10px] sm:text-xs shadow-sm bg-secondary"
+                                className="h-[clamp(2rem,4.5vh,2.5rem)] md:h-[clamp(2.5rem,6vh,3rem)] text-[10px] sm:text-xs shadow-sm bg-secondary"
                                 onClick={onKeyPress}
                             />
                         ))}
@@ -74,7 +74,7 @@ const ProgrammerKeypad = ({ onKeyPress, base, setBase, conversions }) => {
                                     label={key}
                                     variant={variant}
                                     colSpan={colSpan}
-                                    className={`h-[clamp(2.5rem,6vh,3rem)] text-[clamp(1rem,2vh,1.25rem)] font-semibold ${isDisabled(key) ? 'opacity-30 pointer-events-none' : ''}`}
+                                    className={`h-[clamp(2rem,4.5vh,2.5rem)] md:h-[clamp(2.5rem,6vh,3rem)] text-[clamp(1rem,2vh,1.25rem)] font-semibold ${isDisabled(key) ? 'opacity-30 pointer-events-none' : ''}`}
                                     onClick={onKeyPress}
                                 />
                             );

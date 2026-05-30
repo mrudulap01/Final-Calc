@@ -59,7 +59,7 @@ const Dashboard = () => {
             </header>
 
             {/* Main Area */}
-            <main className="flex-grow flex flex-col items-center justify-center p-1 sm:p-4 overflow-hidden relative z-10">
+            <main className="h-[calc(100dvh-3.5rem)] md:h-[calc(100dvh-4rem)] w-full flex flex-col items-center justify-center px-0 md:px-4 py-0 overflow-hidden relative z-10">
                 {/* Calculator Always Visible */}
                 <div className="flex items-center justify-center w-full max-w-5xl h-full relative z-10">
                     <Calculator />

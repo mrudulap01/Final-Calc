@@ -358,7 +358,7 @@ const Calculator = () => {
                 ref={displayRef}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                className={`w-[98vw] max-w-full md:w-full rounded-[1.5rem] md:rounded-[2rem] p-[clamp(0.25rem,1vh,1.5rem)] shadow-2xl border md:backdrop-blur-xl relative transition-all duration-300 z-10 flex flex-col max-h-full ${mode === 'basic' ? 'md:max-w-md' : 'md:max-w-xl'
+                className={`w-full max-w-full rounded-none md:rounded-[2rem] px-2 py-1 md:p-[clamp(0.25rem,1vh,1.5rem)] shadow-none md:shadow-2xl border-none md:border md:backdrop-blur-xl relative transition-all duration-300 z-10 flex flex-col h-full md:max-h-full ${mode === 'basic' ? 'md:max-w-md' : 'md:max-w-xl'
                     }`}
                 style={{
                     backgroundColor: 'var(--color-bg-base)', // Solid base on mobile for speed
@@ -366,7 +366,7 @@ const Calculator = () => {
                 }}
             >
                 {/* Mobile Robot completely removed for viewport optimization */}
-                <div className="flex justify-between items-end mb-2 sm:mb-6">
+                <div className="flex justify-between items-end mb-1 md:mb-6">
                     <div className="flex bg-black/5 dark:bg-white/5 p-1 rounded-xl items-center w-full justify-between sm:justify-start gap-2">
                         {['basic', 'scientific', 'programmer'].map((m) => (
                             <button
@@ -406,7 +406,7 @@ const Calculator = () => {
                 </div>
 
                 <div
-                    className="w-full flex flex-col items-end mb-2 sm:mb-6 bg-black/5 dark:bg-white/5 p-3 sm:p-4 rounded-2xl border min-h-[clamp(60px,15vh,120px)] justify-end overflow-hidden relative group"
+                    className="w-full flex flex-col items-end mb-1 md:mb-6 bg-black/5 dark:bg-white/5 p-2 md:p-4 rounded-xl md:rounded-2xl border min-h-[70px] md:min-h-[clamp(60px,15vh,120px)] justify-end overflow-hidden relative group"
                     style={{ borderColor: 'var(--color-border)' }}
                 >
                     <div className="absolute top-3 left-3 flex gap-2">
