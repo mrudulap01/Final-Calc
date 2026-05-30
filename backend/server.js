@@ -8,11 +8,23 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-    origin: [
-        'https://final-calc-seven.vercel.app',
-        'https://final-calc-etu3.vercel.app', 
-        'http://localhost:5173'
-    ],
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like curl requests or mobile apps)
+        if (!origin) return callback(null, true);
+        
+        const allowedExact = [
+            'https://final-calc-seven.vercel.app',
+            'https://www.final-calc-seven.vercel.app',
+            'http://localhost:5173'
+        ];
+        
+        // Allow exact matches OR any Vercel preview deployment
+        if (allowedExact.includes(origin) || origin.endsWith('.vercel.app')) {
+            callback(null, true);
+        } else {
+            callback(new Error('CORS Policy: Origin not allowed'));
+        }
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true
 }));
