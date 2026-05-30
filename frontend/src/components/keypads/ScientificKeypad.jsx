@@ -13,7 +13,7 @@ const ScientificKeypad = ({ onKeyPress }) => {
     ];
 
     return (
-        <div className="grid grid-cols-5 gap-[clamp(0.2rem,1vh,0.5rem)]">
+        <div className="grid grid-cols-5 gap-1 md:gap-[clamp(0.2rem,1vh,0.5rem)]">
             {keys.flat().map((key) => {
                 let variant = 'default';
                 let colSpan = 1;

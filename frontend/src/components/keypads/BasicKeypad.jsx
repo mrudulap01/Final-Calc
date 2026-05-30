@@ -11,7 +11,7 @@ const BasicKeypad = ({ onKeyPress }) => {
     ];
 
     return (
-        <div className="grid grid-cols-4 gap-[clamp(0.25rem,1.5vh,0.75rem)]">
+        <div className="grid grid-cols-4 gap-1 md:gap-[clamp(0.25rem,1.5vh,0.75rem)]">
             {keys.flat().map((key) => {
                 let variant = 'default';
                 let colSpan = 1;

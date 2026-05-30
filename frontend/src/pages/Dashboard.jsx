@@ -17,7 +17,7 @@ const Dashboard = () => {
     return (
         <div className="flex-grow flex flex-col h-[100dvh] max-h-[100dvh] overflow-hidden relative">
             {/* Header */}
-            <header className="h-20 sm:h-16 flex items-center justify-between px-4 sm:px-6 backdrop-blur-md border-b z-20 relative"
+            <header className="h-14 md:h-16 flex items-center justify-between px-2 md:px-6 backdrop-blur-md border-b z-20 relative"
                 style={{
                     backgroundColor: 'rgba(var(--color-bg-panel), 0.9)',
                     borderColor: 'var(--color-border)',
@@ -34,11 +34,11 @@ const Dashboard = () => {
                 {/* Center: Tabs */}
                 <div className="flex-1 flex items-center justify-center gap-3">
 
-                    <button aria-label="View History" onClick={() => setActiveTab('history')} className={`p-3 rounded-xl transition-colors ${activeTab === 'history' ? 'bg-black/10 dark:bg-white/10 shadow-inner' : 'hover:bg-black/5 dark:hover:bg-white/5'}`} title="History">
-                        <History size={24} />
+                    <button aria-label="View History" onClick={() => setActiveTab('history')} className={`p-2 md:p-3 rounded-xl transition-colors ${activeTab === 'history' ? 'bg-black/10 dark:bg-white/10 shadow-inner' : 'hover:bg-black/5 dark:hover:bg-white/5'}`} title="History">
+                        <History className="w-5 h-5 md:w-6 md:h-6" />
                     </button>
-                    <button aria-label="View Analytics" onClick={() => setActiveTab('analytics')} className={`p-3 rounded-xl transition-colors ${activeTab === 'analytics' ? 'bg-black/10 dark:bg-white/10 shadow-inner' : 'hover:bg-black/5 dark:hover:bg-white/5'}`} title="Analytics">
-                        <BarChart2 size={24} />
+                    <button aria-label="View Analytics" onClick={() => setActiveTab('analytics')} className={`p-2 md:p-3 rounded-xl transition-colors ${activeTab === 'analytics' ? 'bg-black/10 dark:bg-white/10 shadow-inner' : 'hover:bg-black/5 dark:hover:bg-white/5'}`} title="Analytics">
+                        <BarChart2 className="w-5 h-5 md:w-6 md:h-6" />
                     </button>
                 </div>
 

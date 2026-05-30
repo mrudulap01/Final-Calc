@@ -350,7 +350,7 @@ const Calculator = () => {
     return (
         <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 w-full">
             {/* Robot Assistant on the LEFT */}
-            <div className="flex-shrink-0 z-10 hidden sm:flex">
+            <div className="flex-shrink-0 z-10 hidden md:flex">
                 <RobotAssistant state={robotState} message={robotMsg} />
             </div>
 
@@ -358,7 +358,7 @@ const Calculator = () => {
                 ref={displayRef}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                className={`w-[98%] sm:w-full rounded-[1.5rem] sm:rounded-[2rem] p-[clamp(0.5rem,2vh,1.5rem)] shadow-2xl border md:backdrop-blur-xl relative transition-all duration-300 z-10 flex flex-col max-h-full ${mode === 'basic' ? 'sm:max-w-md' : 'sm:max-w-xl'
+                className={`w-[98vw] max-w-full md:w-full rounded-[1.5rem] md:rounded-[2rem] p-[clamp(0.25rem,1vh,1.5rem)] shadow-2xl border md:backdrop-blur-xl relative transition-all duration-300 z-10 flex flex-col max-h-full ${mode === 'basic' ? 'md:max-w-md' : 'md:max-w-xl'
                     }`}
                 style={{
                     backgroundColor: 'var(--color-bg-base)', // Solid base on mobile for speed
